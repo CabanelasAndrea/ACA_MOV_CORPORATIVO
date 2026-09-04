@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACA MOV Corporate — Safe Mobility Training</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg-dark: #0a0a0f;
+    --bg-card: #111118;
+    --bg-light: #f8f9fb;
+    --accent: #2563eb;
+    --accent-light: #3b82f6;
+    --text-primary: #0a0a0f;
+    --text-light: #ffffff;
+    --text-muted: rgba(255,255,255,0.55);
+    --text-secondary: #64748b;
+    --border: rgba(255,255,255,0.06);
+    --border-light: #e2e8f0;
+    --success: #10b981;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--text-light);
+    background: var(--bg-dark);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  a { text-decoration: none; color: inherit; }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* NAV */
+  .nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 32px; position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,15,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-size: 18px; font-weight: 700; letter-spacing: 1px; }
+  .nav-logo span { font-weight: 400; font-size: 11px; opacity: 0.6; }
+  .nav-links { display: flex; gap: 28px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7); }
+  .nav-links a:hover { color: var(--text-light); }
+  .nav-cta {
+    padding: 8px 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);
+    background: transparent; color: var(--text-light); font-size: 13px; font-weight: 500;
+  }
+  .nav-cta:hover { background: rgba(255,255,255,0.05); }
+
+  /* HERO */
+  .hero {
+    position: relative; min-height: 520px; display: flex; align-items: center;
+    padding: 0 32px; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.7) 45%, rgba(10,10,15,0.3) 100%),
+                linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f172a 100%);
+    opacity: 0.9;
+  }
+  .hero-glow {
+    position: absolute; right: -5%; top: 10%; width: 55%; height: 80%;
+    border-radius: 200px 0 0 200px;
+    background: linear-gradient(180deg, rgba(59,130,246,0.08) 0%, rgba(10,10,15,0) 100%);
+    filter: blur(60px);
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 560px; }
+  .hero-tag {
+    font-size: 11px; font-weight: 600; letter-spacing: 2px; color: var(--accent-light);
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .hero h1 { font-size: 56px; font-weight: 500; line-height: 1.05; margin-bottom: 20px; letter-spacing: -1px; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,0.65); margin-bottom: 28px; max-width: 400px; }
+  .btn-primary {
+    padding: 14px 28px; border-radius: 8px; border: none; background: var(--accent);
+    color: #fff; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: #1d4ed8; }
+  .hero-driver {
+    position: absolute; right: 5%; bottom: 0; width: 45%; height: 90%;
+    background: linear-gradient(180deg, transparent 0%, rgba(10,10,15,0.1) 60%, rgba(10,10,15,0.95) 100%),
+                linear-gradient(90deg, rgba(10,10,15,0.9) 0%, transparent 30%);
+    border-radius: 0 0 0 100px; display: flex; align-items: flex-end; justify-content: center;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 2px; text-transform: uppercase;
+  }
+
+  /* STRATEGIC */
+  .strategic {
+    padding: 80px 32px; background: var(--bg-light); color: var(--text-primary);
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .strategic-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: start;
+  }
+  .strategic h2 { font-size: 36px; font-weight: 500; line-height: 1.15; margin-bottom: 8px; }
+  .strategic .accent { color: var(--accent); }
+  .strategic-line { width: 48px; height: 3px; background: var(--accent); margin-top: 24px; }
+  .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .pillar svg { margin-bottom: 12px; }
+  .pillar-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+  .pillar-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+  /* METHOD */
+  .method { padding: 80px 32px; background: var(--bg-dark); }
+  .section-header { text-align: center; margin-bottom: 48px; }
+  .section-tag {
+    font-size: 11px; font-weight: 600; letter-spacing: 2px; color: var(--accent-light);
+    text-transform: uppercase; margin-bottom: 12px; display: block;
+  }
+  .section-title { font-size: 28px; font-weight: 500; }
+  .method-cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;
+  }
+  .method-card {
+    border-radius: 12px; overflow: hidden; background: var(--bg-card);
+    border: 1px solid var(--border); position: relative;
+    transition: transform 0.2s;
+  }
+  .method-card:hover { transform: translateY(-4px); }
+  .method-img {
+    height: 160px; position: relative; overflow: hidden;
+  }
+  .method-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(10,10,15,0.9) 100%);
+  }
+  .method-img svg { position: absolute; bottom: 20px; left: 20px; opacity: 0.3; }
+  .method-body { padding: 20px; }
+  .method-num { font-size: 28px; font-weight: 300; color: var(--accent-light); margin-bottom: 4px; }
+  .method-label { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+  .method-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ACADEMY */
+  .academy { position: relative; padding: 100px 32px; overflow: hidden; }
+  .academy-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(10,10,15,0.97) 0%, rgba(10,10,15,0.7) 50%, rgba(10,10,15,0.4) 100%),
+                linear-gradient(180deg, #0f172a 0%, #0a0a0f 100%);
+  }
+  .academy-glow {
+    position: absolute; right: 0; top: 0; width: 50%; height: 100%;
+    background: linear-gradient(135deg, rgba(59,130,246,0.05) 0%, transparent 60%);
+  }
+  .academy-grid {
+    position: relative; z-index: 2; max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .academy h2 { font-size: 32px; font-weight: 500; line-height: 1.15; margin-bottom: 16px; }
+  .academy .accent { font-size: 20px; color: var(--accent-light); font-weight: 500; margin-bottom: 24px; display: block; }
+  .btn-outline {
+    padding: 12px 24px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);
+    background: transparent; color: #fff; font-size: 13px; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.05); }
+  .academy-visual {
+    position: relative; height: 320px; border-radius: 12px; overflow: hidden;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #111118 100%);
+  }
+  .academy-visual::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(10,10,15,0.8) 100%);
+  }
+  .academy-visual .caption {
+    position: absolute; bottom: 20px; left: 20px; right: 20px; z-index: 2;
+  }
+  .academy-visual .caption small { font-size: 12px; color: rgba(255,255,255,0.5); }
+  .academy-visual .caption div { font-size: 14px; font-weight: 500; }
+
+  /* SOLUTIONS */
+  .solutions { padding: 80px 32px; background: var(--bg-light); color: var(--text-primary); }
+  .solutions-scroll {
+    display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px;
+    scroll-snap-type: x mandatory; scrollbar-width: thin;
+  }
+  .solutions-scroll::-webkit-scrollbar { height: 4px; }
+  .solutions-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
+  .solution-card {
+    min-width: 260px; flex-shrink: 0; border-radius: 12px; overflow: hidden;
+    background: #fff; border: 1px solid var(--border-light);
+    scroll-snap-align: start; cursor: pointer; transition: transform 0.2s;
+  }
+  .solution-card:hover { transform: translateY(-4px); }
+  .solution-img { height: 140px; position: relative; }
+  .solution-img svg { position: absolute; bottom: 12px; left: 16px; }
+  .solution-body { padding: 20px; }
+  .solution-title { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+  .solution-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
+  .solution-link { font-size: 13px; color: var(--accent); font-weight: 500; }
+
+  /* INDEX */
+  .index-section { padding: 80px 32px; background: var(--bg-dark); }
+  .index-grid {
+    display: grid; grid-template-columns: 1fr 1.5fr; gap: 48px; align-items: center;
+  }
+  .index-section h2 { font-size: 32px; font-weight: 500; line-height: 1.15; margin-bottom: 16px; }
+  .index-section p { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
+  .index-dashboard {
+    background: var(--bg-card); border-radius: 16px; padding: 28px;
+    border: 1px solid var(--border);
+  }
+  .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .dash-header div:first-child { font-size: 13px; font-weight: 600; }
+  .dash-header div:last-child { font-size: 11px; color: rgba(255,255,255,0.4); }
+  .dash-score { display: flex; gap: 32px; align-items: center; margin-bottom: 24px; }
+  .dash-score-num { text-align: center; }
+  .dash-score-num .big { font-size: 42px; font-weight: 500; line-height: 1; }
+  .dash-score-num .big span { font-size: 16px; color: rgba(255,255,255,0.4); }
+  .dash-score-num .label { font-size: 11px; color: var(--success); margin-top: 4px; }
+  .dash-chart { flex: 1; }
+  .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dash-item { padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.03); }
+  .dash-item-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+  .dash-item-val { font-size: 20px; font-weight: 500; color: var(--success); }
+  .dash-item-val span { font-size: 12px; }
+
+  /* STATS */
+  .stats { padding: 60px 32px; background: var(--bg-light); color: var(--text-primary); }
+  .stats-grid {
+    display: flex; justify-content: space-around; flex-wrap: wrap; gap: 32px; text-align: center;
+  }
+  .stat-num { font-size: 36px; font-weight: 500; color: var(--accent); line-height: 1; }
+  .stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 6px; max-width: 120px; margin-left: auto; margin-right: auto; }
+  .stat-badge {
+    width: 48px; height: 48px; margin: 0 auto 8px; border-radius: 50%;
+    background: #1e3a5f; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 11px; font-weight: 700;
+  }
+
+  /* FOOTER CTA */
+  .footer-cta { position: relative; padding: 100px 32px; overflow: hidden; }
+  .footer-cta-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, #0f172a 0%, #0a0a0f 100%);
+  }
+  .footer-cta-overlay {
+    position: absolute; bottom: 0; left: 0; width: 60%; height: 100%;
+    background: linear-gradient(90deg, rgba(10,10,15,0.95) 0%, transparent 100%);
+  }
+  .footer-cta-grid {
+    position: relative; z-index: 2; max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+  }
+  .footer-cta h2 { font-size: 32px; font-weight: 500; line-height: 1.2; margin-bottom: 24px; }
+  .footer-cta-visual {
+    position: relative; height: 280px; border-radius: 12px; overflow: hidden;
+    background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #111118 100%);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px; background: var(--bg-dark); border-top: 1px solid var(--border);
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo { font-size: 14px; font-weight: 700; letter-spacing: 1px; }
+  .footer-logo span { font-weight: 400; font-size: 10px; opacity: 0.5; }
+  .footer-links { display: flex; gap: 24px; font-size: 12px; color: rgba(255,255,255,0.4); }
+  .footer-links a:hover { color: var(--text-light); }
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.3); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero h1 { font-size: 36px; }
+    .hero-driver { display: none; }
+    .strategic-grid, .academy-grid, .index-grid, .footer-cta-grid { grid-template-columns: 1fr; }
+    .pillars { grid-template-columns: 1fr; }
+    .dash-score { flex-direction: column; gap: 16px; }
+    .stats-grid { flex-direction: column; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">ACA MOV <span>CORPORATE</span></div>
+  <div class="nav-links">
+    <a href="#soluciones">Soluciones</a>
+    <a href="#academy">Academy</a>
+    <a href="#index">Road Safety Index</a>
+    <a href="#industrias">Industrias</a>
+    <a href="#nosotros">Nosotros</a>
+  </div>
+  <button class="nav-cta">Contacto</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Every journey matters</div>
+    <h1>Cada viaje<br>importa.</h1>
+    <p>La movilidad mueve tu organización. Nosotros ayudamos a protegerla.</p>
+    <button class="btn-primary" onclick="alert('Gracias por tu interés. Contactá a Leonardo Giachetti: (011) 4808-4226')">
+      Diseñar un programa <span style="font-size:18px;">→</span>
+    </button>
+  </div>
+  <div class="hero-driver">
+    <svg width="280" height="400" viewBox="0 0 280 400" style="opacity:0.25;">
+      <ellipse cx="200" cy="120" rx="35" ry="40" fill="rgba(255,255,255,0.15)"/>
+      <path d="M170 160 Q200 150 230 160 L240 220 L220 280 L180 280 L160 220 Z" fill="rgba(255,255,255,0.1)"/>
+      <path d="M160 220 L120 300 L140 380" stroke="rgba(255,255,255,0.1)" stroke-width="20" stroke-linecap="round" fill="none"/>
+      <path d="M240 220 L260 300 L240 380" stroke="rgba(255,255,255,0.1)" stroke-width="20" stroke-linecap="round" fill="none"/>
+      <path d="M180 280 L160 380" stroke="rgba(255,255,255,0.08)" stroke-width="18" stroke-linecap="round" fill="none"/>
+      <path d="M220 280 L240 380" stroke="rgba(255,255,255,0.08)" stroke-width="18" stroke-linecap="round" fill="none"/>
+    </svg>
+  </div>
+  <div class="hero-scroll">Scroll ↓</div>
+</section>
+
+<!-- STRATEGIC -->
+<section class="strategic">
+  <div class="container strategic-grid">
+    <div>
+      <h2>La movilidad ya no<br>es un tema operativo.</h2>
+      <p class="accent">Es una decisión<br>estratégica.</p>
+      <div class="strategic-line"></div>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5"><path d="M3 17v4h4M3 7V3h4M21 17v4h-4M21 7V3h-4M9 9h6v6H9z"/><path d="M5 12h2M17 12h2M12 5v2M12 17v2"/></svg>
+        <div class="pillar-title">Productividad</div>
+        <div class="pillar-desc">Operaciones más eficientes, mejores resultados.</div>
+      </div>
+      <div class="pillar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div class="pillar-title">Seguridad</div>
+        <div class="pillar-desc">Personas protegidas, riesgos gestionados, accidentes evitados.</div>
+      </div>
+      <div class="pillar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <div class="pillar-title">Reputación</div>
+        <div class="pillar-desc">Organizaciones responsables, confianza que se construye.</div>
+      </div>
+      <div class="pillar">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 6v6l4 2"/></svg>
+        <div class="pillar-title">Sostenibilidad</div>
+        <div class="pillar-desc">Movilidad sostenible, impacto positivo en el entorno.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section class="method">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Nuestro método</span>
+      <h2 class="section-title">Comprender. Desarrollar. Entrenar. Transformar.</h2>
+    </div>
+    <div class="method-cards">
+      <div class="method-card">
+        <div class="method-img" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="method-body">
+          <div class="method-num">01</div>
+          <div class="method-label">ASSESS</div>
+          <div class="method-desc">Comprender antes de actuar. Diagnóstico, evaluación de riesgos e indicadores para conocer tu punto de partida.</div>
+        </div>
+      </div>
+      <div class="method-card">
+        <div class="method-img" style="background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        </div>
+        <div class="method-body">
+          <div class="method-num">02</div>
+          <div class="method-label">LEARN</div>
+          <div class="method-desc">Desarrollar capacidades. Programas de formación adaptados a tu organización, presencial, virtual o híbrido.</div>
+        </div>
+      </div>
+      <div class="method-card">
+        <div class="method-img" style="background: linear-gradient(135deg, #312e81 0%, #0f172a 100%);">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 00-8.48-8.48L9.06 4.53a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l.7-.7"/><path d="M9.19 17.69a1 1 0 00-1.4 0l-1.6 1.6a1 1 0 000 1.4l3.77 3.77a6 6 0 008.48-8.48l-3.77-3.77a1 1 0 00-1.4 0l-1.6 1.6a1 1 0 000 1.4l.7.7"/></svg>
+        </div>
+        <div class="method-body">
+          <div class="method-num">03</div>
+          <div class="method-label">EXPERIENCE</div>
+          <div class="method-desc">Aprender haciendo. Entrenamiento práctico en entornos controlados para desarrollar habilidades reales de conducción.</div>
+        </div>
+      </div>
+      <div class="method-card">
+        <div class="method-img" style="background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="method-body">
+          <div class="method-num">04</div>
+          <div class="method-label">TRANSFORM</div>
+          <div class="method-desc">Construir una cultura. Consultoría y acompañamiento para una cultura de movilidad segura sostenible.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMY -->
+<section class="academy" id="academy">
+  <div class="academy-bg"></div>
+  <div class="academy-glow"></div>
+  <div class="academy-grid">
+    <div>
+      <span class="section-tag">Academy</span>
+      <h2>Algunas decisiones<br>no pueden aprenderse<br>en una presentación.</h2>
+      <span class="accent">Hay que vivirlas.</span>
+      <button class="btn-outline" onclick="alert('Escuela de Conducción ACA. Contacto: Lic. Leonardo Giachetti (011) 4808-4226')">
+        Conocer nuestra Escuela <span>→</span>
+      </button>
+    </div>
+    <div class="academy-visual">
+      <svg style="position:absolute; bottom:0; left:0; width:100%; height:100%; opacity:0.4;" viewBox="0 0 400 300">
+        <ellipse cx="200" cy="280" rx="180" ry="15" fill="rgba(59,130,246,0.1)"/>
+        <path d="M80 280 Q200 200 320 280" stroke="rgba(59,130,246,0.2)" stroke-width="2" fill="none"/>
+        <circle cx="120" cy="240" r="4" fill="#ef4444" opacity="0.6"/>
+        <circle cx="160" cy="220" r="4" fill="#ef4444" opacity="0.6"/>
+        <circle cx="200" cy="210" r="4" fill="#ef4444" opacity="0.6"/>
+        <circle cx="240" cy="220" r="4" fill="#ef4444" opacity="0.6"/>
+        <circle cx="280" cy="240" r="4" fill="#ef4444" opacity="0.6"/>
+        <rect x="190" y="160" width="20" height="40" rx="4" fill="rgba(255,255,255,0.1)"/>
+        <rect x="185" y="150" width="30" height="15" rx="3" fill="rgba(255,255,255,0.08)"/>
+      </svg>
+      <div class="caption">
+        <small>Escuela de Conducción ACA</small>
+        <div>Pista húmeda · Slalom · Frenado de emergencia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section class="solutions" id="soluciones">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag" style="color:var(--accent);">Soluciones</span>
+      <h2 class="section-title" style="color:var(--text-primary);">Programas diseñados para cada desafío</h2>
+    </div>
+    <div class="solutions-scroll">
+      <div class="solution-card">
+        <div class="solution-img" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%);">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"><path d="M5 17a2 2 0 104 0m-4 0V9a2 2 0 012-2h6l4 4v6a2 2 0 01-2 2H5z"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg>
+        </div>
+        <div class="solution-body">
+          <div class="solution-title">Safe Driver Essentials</div>
+          <div class="solution-desc">Formación esencial para conductores más seguros en su día a día.</div>
+          <div class="solution-link">Ver más →</div>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-img" style="background: linear-gradient(135deg, #312e81 0%, #4338ca 100%);">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"><path d="M9 17a2 2 0 104 0m-4 0V8l3-3 3 3v9a2 2 0 01-2 2H9z"/><circle cx="10" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>
+        </div>
+        <div class="solution-body">
+          <div class="solution-title">Motorcycle Safety</div>
+          <div class="solution-desc">Programas específicos para motociclistas y delivery.</div>
+          <div class="solution-link">Ver más →</div>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-img" style="background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 7v10M18 7v10"/></svg>
+        </div>
+        <div class="solution-body">
+          <div class="solution-title">Fleet Performance</div>
+          <div class="solution-desc">Gestión inteligente de flotas para mejor desempeño y reducir costos.</div>
+          <div class="solution-link">Ver más →</div>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-img" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="solution-body">
+          <div class="solution-title">Driving Experience</div>
+          <div class="solution-desc">Entrenamiento práctico en pista con instructores especializados.</div>
+          <div class="solution-link">Ver más →</div>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-img" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="solution-body">
+          <div class="solution-title">Executive Driver</div>
+          <div class="solution-desc">Conducción segura para ejecutivos y choferes.</div>
+          <div class="solution-link">Ver más →</div>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-img" style="background: linear-gradient(135deg, #064e3b 0%, #059669 100%);">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="solution-body">
+          <div class="solution-title">Eco Driving</div>
+          <div class="solution-desc">Menos consumo, menos emisiones, más eficiencia.</div>
+          <div class="solution-link">Ver más →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROAD SAFETY INDEX -->
+<section class="index-section" id="index">
+  <div class="container index-grid">
+    <div>
+      <span class="section-tag">FIA Road Safety Index</span>
+      <h2>Medir para mejorar.</h2>
+      <p>El FIA Road Safety Index permite conocer el nivel de madurez en seguridad y gestión de la seguridad vial y construir un plan de mejora basado en evidencia.</p>
+      <button class="btn-outline" onclick="alert('FIA Road Safety Index. Contacto: Lic. Leonardo Giachetti (011) 4808-4226')">
+        Conocer más <span>→</span>
+      </button>
+    </div>
+    <div class="index-dashboard">
+      <div class="dash-header">
+        <div>Dashboard</div>
+        <div>Puntaje general</div>
+      </div>
+      <div class="dash-score">
+        <div class="dash-score-num">
+          <div class="big">72<span>/100</span></div>
+          <div class="label">Nivel Avanzado ↑</div>
+        </div>
+        <div class="dash-chart">
+          <svg width="100%" height="80" viewBox="0 0 200 80">
+            <circle cx="100" cy="40" r="36" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8"/>
+            <circle cx="100" cy="40" r="36" fill="none" stroke="#3b82f6" stroke-width="8" stroke-dasharray="180" stroke-dashoffset="50" stroke-linecap="round" transform="rotate(-90 100 40)"/>
+            <text x="100" y="45" text-anchor="middle" fill="#fff" font-size="14" font-weight="500">72%</text>
+          </svg>
+        </div>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-item">
+          <div class="dash-item-label">Tasa de siniestros</div>
+          <div class="dash-item-val">28% <span>↑</span></div>
+        </div>
+        <div class="dash-item">
+          <div class="dash-item-label">Cumplimiento</div>
+          <div class="dash-item-val">85% <span>↑</span></div>
+        </div>
+        <div class="dash-item">
+          <div class="dash-item-label">Capacitación</div>
+          <div class="dash-item-val">90% <span>↑</span></div>
+        </div>
+        <div class="dash-item">
+          <div class="dash-item-label">Uso de cinturón</div>
+          <div class="dash-item-val">96% <span>↑</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container stats-grid">
+    <div>
+      <div class="stat-num">120+</div>
+      <div class="stat-label">años acompañando la movilidad</div>
+    </div>
+    <div>
+      <div class="stat-num">60+</div>
+      <div class="stat-label">años formando conductores</div>
+    </div>
+    <div>
+      <div class="stat-num">100+</div>
+      <div class="stat-label">empresas capacitadas</div>
+    </div>
+    <div>
+      <div class="stat-num">50.000+</div>
+      <div class="stat-label">personas formadas</div>
+    </div>
+    <div>
+      <div class="stat-badge">FIA</div>
+      <div class="stat-label">Miembro FIA Internacional</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta">
+  <div class="footer-cta-bg"></div>
+  <div class="footer-cta-overlay"></div>
+  <div class="footer-cta-grid">
+    <div>
+      <h2>Al final del día...<br>el viaje más importante<br>es el que termina en casa.</h2>
+      <div style="margin-bottom:24px;">
+        <div style="font-size:18px; font-weight:700; letter-spacing:1px;">ACA MOV <span style="font-weight:400; font-size:11px; opacity:0.6;">CORPORATE</span></div>
+      </div>
+      <button class="btn-primary" onclick="alert('Hablemos de tu programa. Contacto: Lic. Leonardo Giachetti (011) 4808-4226 · +54 11 6498 8980')">
+        Hablemos de tu programa <span>→</span>
+      </button>
+    </div>
+    <div class="footer-cta-visual">
+      <svg style="position:absolute; bottom:0; left:0; width:100%; height:100%; opacity:0.3;" viewBox="0 0 400 280">
+        <ellipse cx="200" cy="260" rx="150" ry="20" fill="rgba(59,130,246,0.1)"/>
+        <path d="M120 260 Q160 180 200 200 Q240 180 280 260" stroke="rgba(255,255,255,0.05)" stroke-width="3" fill="none"/>
+        <circle cx="160" cy="140" r="25" fill="rgba(255,255,255,0.05)"/>
+        <circle cx="240" cy="130" r="20" fill="rgba(255,255,255,0.04)"/>
+        <circle cx="200" cy="180" r="15" fill="rgba(255,255,255,0.03)"/>
+        <rect x="185" y="220" width="30" height="40" rx="6" fill="rgba(255,255,255,0.06)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ACA MOV <span>CORPORATE</span></div>
+    <div class="footer-links">
+      <a href="#soluciones">Soluciones</a>
+      <a href="#academy">Academy</a>
+      <a href="#index">Road Safety Index</a>
+      <a href="#industrias">Industrias</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#">Contacto</a>
+    </div>
+    <div class="footer-copy">© 2024 ACA MOV Corporate. Todos los derechos reservados.</div>
+  </div>
+</footer>
+
+</body>
+</html>
